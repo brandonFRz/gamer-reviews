@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.header-bg {
+    background-color: #8d0e0e; /* Ajusta el color según tu necesidad */
+    border-bottom: 5px;
+    padding: 1rem; /* Ajusta el padding según tu necesidad */
+    margin-bottom: 1.25rem; /* Ajusta el margen inferior según tu necesidad */
+  }
