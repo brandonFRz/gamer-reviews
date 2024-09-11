@@ -6,11 +6,12 @@ const CMS_URL = process.env.NEXT_PUBLIC_API_URL;// URL del CMS
 
 ///Interfaces///
 interface CmsItem {
-  id: number;
+  id: string;
   attributes: any;
 }
 
 export interface Review {
+  id: string;
   slug: string;
   title: string;
   subtitle: string;
@@ -110,10 +111,12 @@ async function fetchReviews(parameters: any) {
   return await response.json();
 }
 
+
 // Convierte un item del CMS a un objeto 'Review'.
 function toReview(item: CmsItem): Review {
-  const { attributes } = item;
+  const { attributes, id } = item;
   return {
+    id,
     slug: attributes.slug,
     title: attributes.title,
     subtitle: attributes.subtitle,

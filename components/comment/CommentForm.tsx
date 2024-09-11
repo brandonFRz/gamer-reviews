@@ -4,13 +4,13 @@ import { useFormState } from "@/lib/hooks";
 
 ///Interfaces///
 interface CommentFormProps {
-  slug: string;
+  reviewId: string;
   title: string;
   userName: string
 }
 
 
-export default function CommentForm({ slug, title, userName }: CommentFormProps) {
+export default function CommentForm({ reviewId, title, userName }: CommentFormProps) {
   
   // Se utiliza el hook useFormState para gestionar el estado del formulario y la función de envío
   const [state, handleSubmit] = useFormState(createCommentAction)
@@ -25,7 +25,7 @@ return (
         Ya has jugado a <strong>{title}</strong>, comparte tu opinión.
       </p>
       {/* Campo oculto para enviar el slug al servidor */}
-      <input type="hidden" name="slug" value={slug} />
+      <input type="hidden" name="id" value={reviewId} />
 
       {/* Mostrar el nombre del usuario que está dejando el comentario */}
       <div className="flex">

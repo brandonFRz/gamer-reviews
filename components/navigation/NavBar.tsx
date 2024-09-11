@@ -24,7 +24,7 @@ export default async function NavBar() {
 
         {user ? (
           <>
-            <p className="text-orange-800">Bienvenido {user.name}</p>
+            <p className="text-orange-800">Bienvenido {user.name as string}</p>
             <SignOutButton />
           </>
         ) : (

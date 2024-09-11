@@ -53,6 +53,8 @@ export default async function ReviewPage({params: { slug }}: ReviewPageProps) {
   const gameScreenshots = await getGameScreenshots(slug);
   const gameDetails = await getGameDetails(slug);
   const user = await getUserFromSession();
+  const reviewId = review.id;
+  
 
   return (
     <div className="max-w-[1140px] mx-auto ">
@@ -103,9 +105,9 @@ export default async function ReviewPage({params: { slug }}: ReviewPageProps) {
         {user ? (
           // Si el usuario está autenticado, muestra el formulario de comentarios
           <CommentForm
-            slug={slug}
+            reviewId={reviewId}
             title={review.title}
-            userName={user.name}
+            userName={user.name as string}
           />
         ) : (
           // Si el usuario no está autenticado, muestra un botón para iniciar sesión
@@ -115,7 +117,7 @@ export default async function ReviewPage({params: { slug }}: ReviewPageProps) {
           </div>
         )}
         <Suspense fallback={<CommentListSkeleton />}>
-          <CommentList slug={slug} />
+          <CommentList reviewId={reviewId} />
         </Suspense>
       </section>
     </div>

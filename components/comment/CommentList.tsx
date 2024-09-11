@@ -4,20 +4,26 @@ import { getComments } from '@/lib/comments'
 
 ///Interfaces///
 interface CommentsListProps {
-    slug: string
+  reviewId: string
+}
+
+interface User {
+  id: string;
+  username: string; // Asegúrate de que este campo exista en tu API
 }
 
 interface Comment {
-    id: string;
-    user: string;
-    message: string;
-    postedAt: Date;
-  }
+  username: string;
+  id: string;
+  user: User;
+  message: string;
+  postedAt: Date;
+}
 
  // Componente que muestra la lista de comentarios
-export default async function CommentList({slug}:CommentsListProps) {
+export default async function CommentList({reviewId}:CommentsListProps) {
     // Obtiene los comentarios de la review correspondiente a la reseña.
-    const comments = await getComments(slug)
+    const comments: Comment[] = await getComments(reviewId)
 
     //Muestra un mensaje si no hay comentarios.
     if (comments.length === 0){
@@ -31,7 +37,7 @@ export default async function CommentList({slug}:CommentsListProps) {
         <li key={comment.id} className='px-3 py-2 last:border-none bg-white m-4 rounded-md'>
             <div className='flex gap-3 items-center pb-1 font-semibold'>
                 <UserCircleIcon className='w-6 h-6'/>
-                {comment.user.name}
+                {comment.username}
             </div>
             <p className='italic'>
                 {comment.message}

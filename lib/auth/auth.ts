@@ -1,64 +1,49 @@
-import { jwtVerify, SignJWT } from "jose"; //Verify and sign JWT from jose library
+import { jwtVerify } from "jose"; //Verify and sign JWT from jose library
 import { cookies } from "next/headers";
-import { cache } from "react";
 
-const JWT_COOKIE = "sessionToken"; // Nombre de la cookie donde se almacena el token de sesión.
-const JWT_DURATION = 14 * 24 * 60 * 60 * 1000; //Duración del token de sesión (2 semanas en milisegundos).
 const JWT_SECRET = new TextEncoder().encode(process.env.JWT_SECRET);//Cifra el JWT utilizando una clave secreta obtenida de las variables de entorno.
 
-type AuthenticatedUser = {
-  id: string;
-  email: string;
-  name: string;
-};
-
-// Función para eliminar la cookie de sesión.
-export function deleteSessionCookie(){
-    cookies().delete(JWT_COOKIE)
-}
-
-// Decodifica el token de sesión y verifica su validez.
-const decodeSessionToken = cache(async(sessionToken:string)=>{
-  try {
-    // Verifica el token de sesión utilizando la clave secreta JWT.
-    const { payload } = await jwtVerify<AuthenticatedUser>(
-      sessionToken,
-      JWT_SECRET,
-    );
-    return payload;
-  } catch (error) {
-    console.error("Invalid JWT", error);// Muestra un mensaje de error si el JWT no es válido.
-  }
-})
-
 // Obtiene el usuario autenticado de la sesión actual.
-export async function getUserFromSession(): Promise<
-  AuthenticatedUser | undefined
-> {
+export async function getUserFromSession() {
   // Obtiene el valor del token de la cookie de sesión.
-  const sessionToken = cookies().get(JWT_COOKIE)?.value;
+  const sessionToken = cookies()
+  const token = sessionToken.get('session'); // Obtén la cookie de sesión con el JWT
 
-  // Decodifica y verifica el token si existe.
-  if (sessionToken) {
-    return decodeSessionToken(sessionToken)
+  if (!token) {
+    return null
   }
+
+
+try{
+  // Verifica y decodifica el JWT 
+const {payload} = await jwtVerify(token.value, JWT_SECRET)
+
+    // Retorna el payload decodificado
+    return {
+      id: payload.id,
+      email: payload.email,
+      name: payload.username,
+      jwt: token.value, 
+    };
+
+
+}catch(error){
+  console.error("Error al verificar el JWT:", error);
+  return null;
 }
 
-// Función para establecer la cookie de sesión.
-export async function setSessionCookie({id, email, name}: AuthenticatedUser) {
-  //Calculate the expedition token
-  const expirationTime = new Date(Date.now() + JWT_DURATION);
+}
 
-  // Firma un nuevo token JWT con los datos del usuario autenticado.
-  const sessionToken = await new SignJWT({id, email, name})
-    .setProtectedHeader({ alg: "HS256" })// Establece el encabezado protegido con el algoritmo HS256.
-    .setExpirationTime(expirationTime)// Establece el tiempo de expiración del token.
-    .sign(JWT_SECRET);// Firma el token con la clave secreta.
+export async function setSessionCookie({ jwt, id, email, name }: { jwt: string, id: string, email: string, name: string }) {
+  const cookieStore = cookies();
 
-  // Establece la cookie de sesión con el token JWT firmado.
-  cookies().set(JWT_COOKIE, sessionToken,{
-    expires: expirationTime,//tiempo de expiración
-    httpOnly: true, // Marca la cookie como accesible solo desde HTTP.
-    sameSite: 'lax', // Establece la política SameSite de la cookie como 'lax'.
+  // Guarda el token en una cookie llamada 'session' con opciones adecuadas
+  cookieStore.set('session', jwt, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production', 
+    sameSite: 'lax',
+    path: '/',
+    maxAge: 60 * 60 * 24 * 7, // 7 días
   });
+
 }
