@@ -74,7 +74,7 @@ export default async function ConclusionSheet({ slug }: ConclusionSheetProps) {
             <ul className="list-disc ml-5">
               {review?.points.positivePoints.map((positive, index) => (
                 <li key={index} className="flex items-center">
-                  <HandThumbUpIcon className="w-4 sm:w-5 text-green-500 mr-2"/>
+                  <HandThumbUpIcon className="min-w-5 w-5 h-5 text-green-500 mr-2"/>
                   {positive}
                   </li>
               ))}
@@ -85,7 +85,7 @@ export default async function ConclusionSheet({ slug }: ConclusionSheetProps) {
             <ul className="list-disc ml-5">
               {review?.points.negativePoints.map((negative, index) => (
                 <li key={index} className="flex items-center">
-                  <HandThumbDownIcon className="w-4 sm:w-5 text-red-500 mr-2 "/>
+                  <HandThumbDownIcon className="min-w-5 w-5 h-5 text-red-500 mr-2 "/>
                   {negative}
                   </li>
               ))}
