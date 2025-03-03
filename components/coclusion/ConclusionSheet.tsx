@@ -35,19 +35,19 @@ export default async function ConclusionSheet({ slug }: ConclusionSheetProps) {
       </div>
 
       {/* Detalles del juego */}
-      <div className="mt-5 flex justify-center gap-14 border-b-8 pb-6 border-black">
-        <div className="w-1/2 flex-col justify-around px-4">
+      <div className="mt-8 flex flex-col sm:flex-row justify-between gap-6">
+        <div className="sm:w-1/2 text-sm sm:text-base">
           <p className="text-justify">{review?.conclusion}</p>
           <div className="mt-4">
             <p className="flex items-center ">
-              <ClockIcon className="mr-2 h-5 w-5" />
+              <ClockIcon className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
               {/* Muestra las horas de juego estimadas */}
               <strong>Horas de juego:</strong> 
               <span className="ml-2">{gameDetails?.playtime === 0 ? 'tbd' : `${gameDetails?.playtime}hrs`}.</span>
             </p>
             {/* Muestra las plataformas en las que está disponible el juego */}
-            <p className="flex items-center mt-3">
-              {<Image className="mr-2 h-5 w-5" src={controller} alt="controller" />}
+            <p className="flex items-center mt-2">
+              {<Image className="mr-2 h-4 w-4 sm:h-5 sm:w-5" src={controller} alt="controller" />}
               <strong>Plataformas:</strong>
               <span className=" ml-2">{platforms}</span> 
             </p>
@@ -56,7 +56,7 @@ export default async function ConclusionSheet({ slug }: ConclusionSheetProps) {
               {website && (
                 <a
                   href={website}
-                  className="bg-red-600 px-4 py-2 text-white rounded-lg font-semibold hover:bg-red-700"
+                  className="mt-4 inline-block bg-red-600 px-3 py-2 text-white rounded-md font-semibold hover:bg-red-700 text-xs sm:text-base"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -68,13 +68,13 @@ export default async function ConclusionSheet({ slug }: ConclusionSheetProps) {
         </div>
         
         {/* Puntos positivos y negativos */}
-        <div className="flex w-1/2 flex-col justify-around pl-4">
+        <div className="sm:w-1/2 text-sm sm:text-base">
           <div>
             <h3 className="font-bold">Puntos Positivos</h3>
-            <ul className="list-inside list-disc">
+            <ul className="list-disc ml-5">
               {review?.points.positivePoints.map((positive, index) => (
                 <li key={index} className="flex items-center">
-                  <HandThumbUpIcon className="min-w-5 w-5  min-h-max-5 text-green-500 mr-2"/>
+                  <HandThumbUpIcon className="w-4 sm:w-5 text-green-500 mr-2"/>
                   {positive}
                   </li>
               ))}
@@ -82,10 +82,10 @@ export default async function ConclusionSheet({ slug }: ConclusionSheetProps) {
           </div>
           <div className="mt-4">
             <h3 className="font-bold">Puntos Negativos</h3>
-            <ul className="list-inside list-disc">
+            <ul className="list-disc ml-5">
               {review?.points.negativePoints.map((negative, index) => (
                 <li key={index} className="flex items-center">
-                  <HandThumbDownIcon className="min-w-5 w-5 text-red-500 mr-2 "/>
+                  <HandThumbDownIcon className="w-4 sm:w-5 text-red-500 mr-2 "/>
                   {negative}
                   </li>
               ))}

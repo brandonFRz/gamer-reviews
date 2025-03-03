@@ -6,6 +6,7 @@ const CMS_URL = process.env.NEXT_PUBLIC_API_URL;// URL del CMS
 
 // Maneja la acción de inicio de sesión.
 export async function signInAction(formData: FormData): Promise<undefined | ActionError> {
+  
   // Extrae el correo electrónico y la contraseña del formulario.
   const email = formData.get("email") as string;
   const password = formData.get("password") as string;

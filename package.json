@@ -12,6 +12,7 @@
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "jose": "^5.6.3",
+    "lucide-react": "^0.477.0",
     "marked": "^13.0.2",
     "next": "14.2.5",
     "qs": "^6.12.3",

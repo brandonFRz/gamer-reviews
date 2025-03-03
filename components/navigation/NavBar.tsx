@@ -1,3 +1,4 @@
+
 import NavLink from "./NavLink";
 import { getUserFromSession } from "@/lib/auth/auth";
 import SignOutButton from "../sign/SignOutButton";
@@ -8,32 +9,37 @@ export default async function NavBar() {
   const user = await getUserFromSession();
 
   return (
-    <nav>
-      <ul className="flex gap-4">
-        <li className="font-orbitron font-bold">
-          <NavLink href="/">Gamer Reviews</NavLink>
-        </li>
-        <li className="ml-auto">
-          <NavLink href="/reviews">Reseñas</NavLink>
-        </li>
-        <li>
-          <NavLink href="/about" prefetch={false}>
-            Acerca de nosotros
-          </NavLink>
-        </li>
+    <nav >
+<div className="max-w-screen-lg mx-auto flex items-center">
+        {/* Logo */}
+        <NavLink href="/">
+          Gamer Reviews
+        </NavLink>
 
-        {user ? (
-          <>
-            <p className="text-orange-800">Bienvenido {user.name as string}</p>
-            <SignOutButton />
-          </>
-        ) : (
-          <>
-            <AuthButton mode="signIn" />
-            <AuthButton mode="signUp" />
-          </>
-        )}
-      </ul>
+        {/* Menú alineado a la derecha */}
+        <ul className="flex gap-3 sm:gap-6 text-sm sm:text-base ml-auto">
+          <li>
+            <NavLink href="/reviews">Reseñas</NavLink>
+          </li>
+          <li className="hidden sm:block">
+            <NavLink href="/about" prefetch={false}>
+              Acerca de nosotros
+            </NavLink>
+          </li>
+
+          {user ? (
+            <li className="flex gap-3 sm:gap-4 items-center text-orange-500">
+              <p>Bienvenido {user.name as string}</p>
+              <SignOutButton />
+            </li>
+          ) : (
+            <li className="flex gap-3 sm:gap-4">
+              <AuthButton mode="signIn" />
+              <AuthButton mode="signUp" />
+            </li>
+          )}
+        </ul>
+      </div>
     </nav>
   );
 }

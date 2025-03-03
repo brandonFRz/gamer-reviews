@@ -1,11 +1,9 @@
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import Heading from "@/components/ui/Heading";
-import { getReviews } from "@/lib/reviews";
+import Header from "@/components/navigation/Header";
 import PaginationBar from "@/components/navigation/PaginationBar";
-import SearchBox from "@/components/ui/SearchBox";
 import { getGameDetails } from "@/lib/rawg";
+import { getReviews } from "@/lib/reviews";
+import Image from "next/image";
+import Link from "next/link";
 
 
 ////Interfaces////
@@ -48,21 +46,18 @@ export default async function ReviewsPage({ searchParams }: ReviewsPageProps) {
   
   return (
     <div>
-      <header className="header-bg flex justify-between">
-        <Heading>Reseñas</Heading>
-          <SearchBox />
-      </header>
-      <ul className="grid grid-cols-1 gap-x-24 gap-y-10 sm:grid-cols-2 md:grid-cols-3">
+      <Header/>
+      <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 p-4">
         {reviews.map((review, index) => {
           const gameDetails = gameDetailsList[index]
           return(
             <li
             key={review.slug}
-            className="w-80 bg-gradient-to-r from-red-900 to-red-950  shadow hover:shadow-xl"
+            className="bg-gradient-to-r from-red-900 to-red-950  shadow hover:shadow-xl rounded-lg overflow-hidden"
             >
             <Link href={`/reviews/${review.slug}`}>
               <Image
-                className="rounded-t object-fill h-48 w-96 "
+                className="object-cover h-48 w-full "
                 src={gameDetails.background_image}
                 alt="thumbnail"
                 width={320}

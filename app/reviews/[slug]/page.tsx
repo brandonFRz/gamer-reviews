@@ -57,7 +57,7 @@ export default async function ReviewPage({params: { slug }}: ReviewPageProps) {
   
 
   return (
-    <div className="max-w-[1140px] mx-auto ">
+    <div className="max-w-[1140px] mx-auto p-6">
        {/* Encabezado */}
       <div className="header-bg">
         <Heading>{review.title}</Heading>
@@ -86,7 +86,7 @@ export default async function ReviewPage({params: { slug }}: ReviewPageProps) {
         />
 
         {/* Carrusel de imágenes del juego */}
-        <section className="mt-8">
+        <section className="mt-8 ">
               <ImageCarousel images={gameScreenshots.results} />
         </section>
       </div>
